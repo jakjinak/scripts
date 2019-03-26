@@ -39,10 +39,9 @@ sub remotestatus
       my $behind = $2;
       next unless $ahead>0 or $behind>0;
       my $txt="";
-      $txt.="\033[1;37mvs $remote/$branchd:";
       $txt.="\033[32m+$ahead" if $ahead>0;
       $txt.="\033[33m-$behind" if $behind>0;
-      $txt.="\033[49;36m";
+      $txt.="\033[22;37m vs $remote/$branchd\033[1;36m";
       push @r, "$txt";
     }
   }
