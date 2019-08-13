@@ -14,16 +14,31 @@ exit(1) if "$gitdir" eq ''; # not within git repo
 
 # check the current branch first
 my $branch;
-open($p, "-|", "git rev-parse --abbrev-ref HEAD 2> /dev/null") or exit(0);
+open($p, "-|", "git rev-parse --symbolic-full-name HEAD 2> /dev/null") or exit(0);
 while(<$p>)
 { chomp;
   $branch=$_;
 }
 close($p);
 exit(0) if $branch eq '';
+my $rbranch;
+open($p, "-|", "git rev-parse --abbrev-ref --symbolic-full-name '\@{u}' 2> /dev/null") or exit(0);
+while(<$p>)
+{ chomp;
+  $rbranch=$_;
+}
+close($p);
+$rbranch='' if $rbranch eq '@{u}';
+$branch =~ s/^refs\/heads\///;
 print "\033[1;37m";
 print "\033[101mMERGE\033[49m " if -e $gitdir."/MERGE_HEAD";
 print "$branch";
+if ($rbranch eq '')
+{ print "\033[1;36m>\033[22;35m<no-remote>\033[33m" ;
+}
+elsif ($rbranch ne "origin/$branch")
+{ print "\033[1;36m>\033[22;33m$rbranch\033[1m";
+}
 
 my @r; # this contains the individual '|' separated fields
 
