@@ -12,7 +12,7 @@ alias Gcorb='function MYGITCHECKOUTREMOTEBRANCH() { local origin=origin ; [ "$2"
 # pulls remote changes (all by default if no args given) or can be tweaked by parameters, prunes deleted branches
 alias Gpul='function MYGITPULL() { git pull "$@" ; git fetch -p ; } ; MYGITPULL'
 # pushes current branch to default remote (if no args given) or can be tweaked by parameters
-alias Gpus='function MYGITPUSH() { local force="" ; [[ "$0" == "-f" || "$1" == "--force" ]] && force=-f && shift ; if [[ $# -eq 0 ]] ; then git push $force origin "$(git rev-parse --abbrev-ref HEAD)" ; else git push "$@" ; fi ; } ; MYGITPUSH'
+alias Gpus='function MYGITPUSH() { local force="" ; [[ "$1" == "-f" || "$1" == "--force" ]] && force=-f && shift ; if [[ $# -eq 0 ]] ; then git push $force origin "$(git rev-parse --abbrev-ref HEAD)" ; else git push "$@" ; fi ; } ; MYGITPUSH'
 # checkouts the previous version of given file (meant to be used for files accidentally deleted but works in other cases too)
 alias Grevertdeleted='function MYGITREVERTDELETED() { [[ -z "$1" ]] && return 1 ; git checkout $(git rev-list -n 1 HEAD -- "$1")^ -- "$1" ; } ; MYGITREVERTDELETED'
 # invokes the "squash" dialog for given number of recent commits
