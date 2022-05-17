@@ -17,3 +17,5 @@ alias Gpus='function MYGITPUSH() { local force="" ; [[ "$1" == "-f" || "$1" == "
 alias Grevertdeleted='function MYGITREVERTDELETED() { [[ -z "$1" ]] && return 1 ; git checkout $(git rev-list -n 1 HEAD -- "$1")^ -- "$1" ; } ; MYGITREVERTDELETED'
 # invokes the "squash" dialog for given number of recent commits
 alias Gsquash='function MYGITSQUASH() { [[ -z "$1" ]] && return 1 ; git rebase -i HEAD~$1 ; } ; MYGITSQUASH'
+# invokes git diff for a given list of files (without any additional params to diff)
+alias GDF='function MYGITDIFFFILES() { local f ; for f in "$@" ; do git diff "$f" ; done ; } ; MYGITDIFFFILES'
