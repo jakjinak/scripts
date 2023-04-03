@@ -3,9 +3,12 @@ alias GA='git add'
 alias GC='git commit'
 alias GB='git branch'
 alias GL='git log --pretty=format:"%C(bold cyan)%H %h%Creset %Cred%ai %C(bold green)%aN%Creset %p%n    %s"'
+alias GLsq='git log --pretty=format:"pick %C(bold cyan)%h%Creset %s"'
 alias GD='git diff'
-# show changes in a commit (1st arg); either all files in commit or a particular one (2nd arg)
+alias GUD='function MYGITDIFFTEXT() ( unset GIT_EXTERNAL_DIFF ; git diff "$@" ) ; MYGITDIFFTEXT'
+# show changes in a commit (1st arg); either all files in commit or a particular one (2nd+ arg)
 alias GDC='function MYGITDIFFCOMMIT() { local commit="$1"; shift; git diff "$commit^" "$commit" "$@"; } ; MYGITDIFFCOMMIT'
+alias GUDC='function MYGITDIFFCOMMITEXT() ( unset GIT_EXTERNAL_DIFF ; local commit="$1"; shift; git diff "$commit^" "$commit" "$@" ) ; MYGITDIFFCOMMITEXT'
 alias Gco='git checkout'
 # checkout a branch and associate it with its remote counterpart: 1st arg is branch, 2nd arg (optional) the remote name (default is origin)
 alias Gcorb='function MYGITCHECKOUTREMOTEBRANCH() { local origin=origin ; [ "$2" ] && origin="$2" ; git checkout -b "$1" "remotes/origin/$1" ; } ; MYGITCHECKOUTREMOTEBRANCH'
