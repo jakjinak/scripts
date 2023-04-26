@@ -2,7 +2,7 @@ alias GS='git status'
 alias GA='git add'
 alias GC='git commit'
 alias GB='git branch'
-alias GL='git log --pretty=format:"%C(bold cyan)%H %h%Creset %Cred%ai %C(bold green)%aN%Creset %p%n    %s"'
+alias GL='git log --pretty=format:"%C(bold cyan)%H %>|(53)%h%Creset %Cred%ai%Creset \"%C(bold green)%aN%Creset\" <%Cgreen%ae%Creset>%n%<|(52)parent: %p %Cred%ci%Creset \"%C(bold yellow)%cN%Creset\" <%C(yellow)%ce%Creset>%n    %B"'
 alias GLsq='git log --pretty=format:"pick %C(bold cyan)%h%Creset %s"'
 alias GD='git diff'
 alias GUD='function MYGITDIFFTEXT() ( unset GIT_EXTERNAL_DIFF ; git diff "$@" ) ; MYGITDIFFTEXT'
@@ -26,4 +26,4 @@ alias GDF='function MYGITDIFFFILES() { local f ; for f in "$@" ; do git diff "$f
 # possible options:
 # -C/+C ... auto/no colors
 # -b ... ignore whitespace changes in diff
-alias GUh='function MYGITSHOWFILEHISTORY() ( unset GIT_EXTERNAL_DIFF ; colorize=always ; nows="" ; while [[ "${1:0:1}" == "-" || "${1:0:1}" == "+" ]] ; do if [[ "$1" == "+C" ]] ; then colorize=never ; shift ; elif [[ "$1" == "-C" ]] ; then colorize=auto ; shift ; elif [[ "$1" == "-b" ]] ; then nows="-b" ; shift ; fi ; done ; f=$1 ; git log --pretty=format:%H -- $f | { i=0 ; while read h ; do echo -en "\e[30;47m" ; git show --color=$colorize --pretty=format:"||||| $i |%Creset %C(bold cyan)%H %h%Creset %Cred%ai %C(bold green)%aN%Creset %p%n    %B" -s $h ; git diff $nows --color=$colorize "$h^" "$h" -- $f ; ((i--)) ; done ; } ) ; MYGITSHOWFILEHISTORY'
+alias GUh='function MYGITSHOWFILEHISTORY() ( unset GIT_EXTERNAL_DIFF ; colorize=always ; cntcolor="\\e[30;47m" ; cntdecolor="\\e[0m" ; nows="" ; while [[ "${1:0:1}" == "-" || "${1:0:1}" == "+" ]] ; do if [[ "$1" == "+C" ]] ; then colorize=never ; shift ; elif [[ "$1" == "-C" ]] ; then colorize=auto ; shift ; elif [[ "$1" == "-b" ]] ; then nows="-b" ; shift ; fi ; done ; f=$1 ; git log --pretty=format:%H -- $f | { i=0 ; while read h ; do echo -e "$cntcolor||||| $i |$cntdecolor" ; git show --color=$colorize --pretty=format:"%C(bold cyan)%H %>|(53)%h%Creset %Cred%ai%Creset \"%C(bold green)%aN%Creset\" <%Cgreen%ae%Creset>%n%<|(52)parent: %p %Cred%ci%Creset \"%C(bold yellow)%cN%Creset\" <%C(yellow)%ce%Creset>%n    %B" -s $h ; git diff $nows --color=$colorize "$h^" "$h" -- $f ; ((i--)) ; done ; } ) ; MYGITSHOWFILEHISTORY'
